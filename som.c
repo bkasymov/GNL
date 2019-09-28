@@ -1,5 +1,5 @@
 
-/*#include "get_next_line.h"
+#include "get_next_line.h"
 
 static t_list			*get_correct_file(t_list **file, int fd)
 {
@@ -47,7 +47,7 @@ int						get_next_line(const int fd, char **line)
 }
 
 
-/*
+
 
 #include "get_next_line.h"
 
@@ -121,4 +121,3 @@ int			get_next_line(const int fd, char **line)
 		return (-1);
 	return (1);
 }
-*/
