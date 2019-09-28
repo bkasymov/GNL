@@ -10,18 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE
-#define GET_NEXT_LINE
+#ifndef GET_NEXT_LINE_H
+#define GET_NEXT_LINE_H
 
 # include <stdlib.h>
+# include <unistd.h>
 
-# include <stdio.h>
-# define BUFF_SIZE 4096
-# include <io.h>
-# include <fcntl.h>
-# include <fcntl.h>
+# include <stdio.h> // УДАЛИТЬ!
+# define BUFF_SIZE 4096 //Я выделил столько памяти, чтобы здесь сохранить всё содержимое открываемого файла
+# define FD_MAX 256 //  Узнал через команду макс. значение дескриптора launchctl limit maxfiles
+
+# include <fcntl.h> 
 # include "libft/libft.h"
 
-int		get_next_line(const int fd, char **line);
+int		get_next_line(const int fd, char **line); //определил как параметр для обращения.
 
 #endif
