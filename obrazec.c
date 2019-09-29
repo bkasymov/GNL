@@ -1,6 +1,6 @@
 
 #include "get_next_line.h"
-
+//12312//
 /*
 ** Allocates sufficccient memory for a copy of the string s1, does the copy,
 ** and returns a pointer to it.
