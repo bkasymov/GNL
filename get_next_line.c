@@ -6,7 +6,7 @@
 /*   By: dpenney <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 22:08:27 by dpenney           #+#    #+#             */
-/*   Updated: 2019/09/28 20:17:45 by dpenney          ###   ########.fr       */
+/*   Updated: 2019/09/29 06:06:10 by dpenney          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 её как ответ в main функцию. 
 Если main запрашивает n-ное кол-во раз функцию GNL, то и я возвращаю n-ную строку прочитанного
 мною файла. 
+
+Моя цель - перевести часть строки из buff в str. И оставить pointer на str, чтобы в последующем считывать из этой позиции до следующего \n либо конца файла. 
 */
 
 /* 						Проверка валидности переданных данных.
@@ -76,9 +78,9 @@ int				get_next_line(const int fd, char **line)
 	rt = ft_valid(fd, line, str);
 	if ((rt = read(fd, buff, BUFF_SIZE) < 0))
 		return (-1);
-	buff[fd] = '\0';
-	if (!(line = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
+	if (!(str = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
 		return (-1);
+	*line = str;
 	ft_sctrclr(line);
 	ft_read(buff, line);
 	return (rt);
