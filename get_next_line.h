@@ -19,9 +19,10 @@
 # include <stdio.h> // УДАЛИТЬ!
 # define BUFF_SIZE 4096 //Я выделил столько памяти, чтобы здесь сохранить всё содержимое открываемого файла
 # define FD_MAX 256 //  Узнал через команду макс. значение дескриптора launchctl limit maxfiles
+# define RET_VALUE(ret) ret > 0 ? 1 : ret
 
 # include <fcntl.h> 
-# include "libft/libft.h"
+# include "./libft/libft.h"
 
 int		get_next_line(const int fd, char **line); //определил как параметр для обращения.
 
