@@ -12,8 +12,8 @@
                 "-g",
                 "/Users/dpenney/Desktop/GNL/get_next_line.h",
                 "/Users/dpenney/Desktop/GNL/obrazec.c",
-              //  "-L/Users/dpenney/Desktop/GNL/libft/",
-              //  "-lft",
+                "-L/Users/dpenney/Desktop/GNL/libft/",
+                "-lft",
                 //"obrazec"
             ]
         }

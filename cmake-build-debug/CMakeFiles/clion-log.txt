@@ -1,1 +1,4 @@
-CMakeLists.txt not found in /Users/dpenney/Desktop/GNL Select CMakeLists.txt file...
+/private/var/folders/zz/zyxvpxvq6csfxvn_n00014yh00097m/T/AppTranslocation/1B81918C-7680-4C18-AB9A-65CCCC4522CF/d/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/dpenney/Desktop/GNL
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/dpenney/Desktop/GNL/cmake-build-debug

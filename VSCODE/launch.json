@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch GNL",
+            "name": "gcc build and debug active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "/Users/dpenney/Desktop/GNL/a.out",
