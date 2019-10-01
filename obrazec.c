@@ -163,7 +163,7 @@ int					get_next_line(int const fd, char **line)
 	return (1);
 }
 
-int				main(int argc, char **argv)
+int				main(void)
 {
 	char	*line;
 	int		fd;
