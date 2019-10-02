@@ -1,6 +1,6 @@
 
 #include "get_next_line.h"
-//12312//
+
 /*
 ** Allocates sufficccient memory for a copy of the string s1, does the copy,
 ** and returns a pointer to it.
@@ -62,19 +62,22 @@ char			*ft_strjoin(char const *s1, char const *s2)
 
 static int			gnl_verify_line(char **stack, char **line)
 {
-	char			*tmp_stack;
-	char			*strchr_stack;
-	int				i;
+	char			*tmp_stack; //Чтобы временно хранить адрес где остановились.
+	char			*strchr_stack;//чтобы читать;
+	int				i;//счётчик
 
 	i = 0;
-	strchr_stack = *stack;
-	while (strchr_stack[i] != '\n')
-		if (!strchr_stack[i++])
+	strchr_stack = *stack;//1.берем содержимое от стэка для чтения
+	while (strchr_stack[i] != '\n')//2.читаем его до символа след строки
+		if (!strchr_stack[i++]) //3.если не находит, то возвращает нуль.
 			return (0);
-	tmp_stack = &strchr_stack[i];
+	tmp_stack = &strchr_stack[i]; //4.Чтобы временно сохранить позицию где остановились;
+	//5. И вот если встретил символ след строки, то берем адрес этого индекса и присваиваем туда конец строки.
 	*tmp_stack = '\0';
-	*line = ft_strdup(*stack);
-	*stack = ft_strdup(tmp_stack + 1);
+	*line = ft_strdup(*stack);//6.отправляем на ft_strdup, чтобы выделилась память из оперативки и 
+	//скопировалась линия до символа КОНЦА СТРОКИ уже. 
+	*stack = ft_strdup(tmp_stack + 1);//Создаем новую память опер. память и копируем содержимое с момента где остановились
+	//и присваиваем обратно в стэк.
 	return (1);
 }
 
@@ -97,22 +100,35 @@ static	int			gnl_read_file(int fd, char *heap, char **stack, char **line)
 	int				ret;
 	char			*tmp_stack;
 
-	while ((ret = read(fd, heap, BUFF_SIZE)) > 0)
+	while ((ret = read(fd, heap, BUFF_SIZE)) > 0) 
+		//1.Пока файл читается. А раз он читается, то рет будет
+		//равен числу байт, которому равен файл. Если успешно читается, 
+		//то выполняется следующее;
 	{
-		heap[ret] = '\0';
-		if (*stack)
+		heap[ret] = '\0'; 
+		//2.т.к. рэт будет равен кол-ву байт, тем самым перейдем 
+		//мы к последнему символу, то сразу ставим символ конца строки
+		if (*stack) //3.если стэк нам пришёл, то
 		{
-			tmp_stack = *stack;
+			tmp_stack = *stack; //присвоили содержание буфера
+			//сохр начальное содержание от стэк
 			*stack = ft_strjoin(tmp_stack, heap);
+			//чтобы объединить его с нашей кучей, заполненный нулём
 			free(tmp_stack);
+			//очищаем временный стэк;
 			tmp_stack = NULL;
+			//и для безопасности обнуляем;
 		}
 		else
 			*stack = ft_strdup(heap);
-		if (gnl_verify_line(stack, line))
+		//а если стэк не пришёл с содержимым, то кучу с размером в буфе
+		//отправляем для созд новой строки за счёт опер памяти и 
+		//присваиваем стэку
+		if (gnl_verify_line(stack, line)) //отпр-ем в функцию, которая ищет симв 
+			//конца строки и копирует его в line;
 			break ;
 	}
-	return (RET_VALUE(ret));
+	return (RET_VALUE(ret));//т.е. если прочлось, то возвр 1, а если нет, то 0;
 }
 
 /*
@@ -136,21 +152,31 @@ static	int			gnl_read_file(int fd, char *heap, char **stack, char **line)
 
 int					get_next_line(int const fd, char **line)
 {
-	static char		*stack[FD_MAX];
-	char			*heap;
+	static char		*stack[FD_MAX]; //Именно статическую, постоянную, где будет всё содержимое нашего файла.
+	char			*heap; //Для кучи
 	int				ret;
 	int				i;
 
 	if (!line || (fd < 0 || fd >= FD_MAX) || (read(fd, stack[fd], 0) < 0) \
 		|| !(heap = (char *)malloc(sizeof(char) * BUFF_SIZE + 1)))
-		return (-1);
-	if (stack[fd])
-		if (gnl_verify_line(&stack[fd], line))
-			return (1);
+	/*1.Если не пришла line  ИЛИ нет файлового дескриптора ИЛИ файловый десрикптор
+	 * больше максимального значения ИЛИ чтение не удалось ИЛИ не выделилась
+	 * память для кучи с размером BUFF_SIZE (он нужен для того, чтобы определить
+	 * размер порций, которыми он будет загружать из файлового дескриптора 
+	 * содержимое нашего файла.*/
+		//!ВАЖНО отметить, что мы уже здесь прочитываем наш файл и копируем содержимое в stack[fd], который и есть наш буфер.
+		//Почему fd? чтобы выделилось именно столько, чтобы хватило для вмещения всего содержимого.
+		return (-1); //то возвращаем -1;
+	if (stack[fd]) //2.обращаемся к нашему файлу
+		if (gnl_verify_line(&stack[fd], line)) //3.определяем линию, 
+			//отправив аргументами наш стэк под номером файлового декр-ра
+			//и принятую нами линию. Там опр-ся симв. новой строки и скопируется в переменную line.
+			return (1); // если не получается - то возвр-м именно 1.
 	i = 0;
-	while (i < BUFF_SIZE)
-		heap[i++] = '\0';
+	while (i < BUFF_SIZE) 
+		heap[i++] = '\0';//4.Мы выделяли память в строке 147 и теперь его заполняем просто нулями. 
 	ret = gnl_read_file(fd, heap, &stack[fd], line);
+	//5. отправляем дескриптор, нашу кучу обнулённую, стэк с индексом дескриптора и линию
 	free(heap);
 	if (ret != 0 || stack[fd] == NULL || stack[fd][0] == '\0')
 	{
