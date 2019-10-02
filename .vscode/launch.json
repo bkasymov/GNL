@@ -1,40 +1,23 @@
 {
-<<<<<<< HEAD
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "(gdb) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceRoot}/obrazec"
-            "args": [],
-=======
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch GNL",
+            "name": "get_next_line",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/Users/dpenney/Desktop/GNL/a.out",
+            "program": "/home/dpenney/dpenney/GNL/out",
             "args": [
-				"/Users/dpenney/Desktop/GNL/test.txt",
+				"test.txt",
 			],//['222'],
->>>>>>> 6da7216fb79274ba6fe31efbf24a59bef551c2f0
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
-            "environment" [],
-            "externalConsole": true,
-            "MTMode": "gdb",
-            "setupCommands": [
-                {
-                "description": "Enable pretty-printing for gdb",
-                "text": "-enable-pretty-printing",
-                "ignoreFailures": true
-                }
-            ]
+            "cwd": "/home/dpenney/dpenney/GNL",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "gcc build active file"
         }
     ]
 }

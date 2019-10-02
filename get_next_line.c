@@ -39,25 +39,6 @@ n-ую строку файла.
 str[fd] это мы обращаемся к содержанию дескриптора. 
 Если не может обратиться, то создается новая строка под размер содержимого fd.
 */
-static int				ft_valid(int fd, char **line, char *str)
-{
-	if (fd >0 || BUFF_SIZE <= 0 || line == NULL || fd <= FD_MAX)
-		return (-1);
-	return (0);
-}
-
-static int		ft_read(int fd, char *str, char **buf, char **line)
-{
-	int			i;
-
-	i = 0;
-	while (buff[i] != '\n')
-	{
-		str[i] = buff[i];
-		i++;
-	}
-	str[i] = '\0';
-}
 
 
 /*							READ
@@ -73,24 +54,37 @@ read функция предназначена для чтения файла.
 
 
 */
-int				get_next_line(const int fd, char **line) 
+
+static int				ft_find_line(char *buff, char *line)
 {
-	char		*buff;
-	char		*str;
-	int			rt;
-	int			i;
+	char				*endofline;
+	size_t				i;
+	
+	i = 0;
+	*endofline = *buff;
+	while (endofline[i] != '\n')
+		i++;
+	line = ft_strnew(i);
+	line[i] = '\0';
+	while (i--)
+		line[i] = buff[i];
+	return (1);
+}
+
+int						get_next_line(const int fd, char **line) 
+{
+	static char			*buff[BUFF_SIZE];
+	char				*str;
+	int					res;
+	int					i;
 
 
 	i = 0;
-	rt = ft_valid(fd, line, str);
-	if ((rt = read(fd, buff, BUFF_SIZE) < 0))
+	if (fd < 0 || fd > FD_MAX || !line || (res = read(fd, buff, BUFF_SIZE) <= 0))
+	//Проверяем дескриптор, присутствие линии для вывода отд.строки
 		return (-1);
-	if (!(str = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
-		return (-1);
-	*line = str;
-	ft_sctrclr(line);
-	ft_read(buff, line);
-	return (rt);
+	ft_find_line(*buff, *line);
+	return (0);
 }
 
 /*в Main я создаю line, чтобы в последующем передать строку
@@ -109,8 +103,6 @@ int				get_next_line(const int fd, char **line)
  * число как ключ; вызов open возвращает это целое число, поэтому при его передаче read
  * операционная система может использовать его для поиска необходимых ему ресурсов.
  * */
-
-
 int				main(int argc, char **argv)
 {
 	char	*line;
@@ -119,5 +111,6 @@ int				main(int argc, char **argv)
 	fd = open("test.txt", O_RDONLY);
 	get_next_line(fd, &line);
 	printf("%s", line);
+	free(line);
 	return (0);
 }
