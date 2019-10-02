@@ -1,10 +1,4 @@
 {
-<<<<<<< HEAD
-// Документацию по формату tasks.json см.
-    // по адресу https://go.microsoft.com/fwlink/?LinkId=733558
-{
-    "name"
-=======
     "version": "2.0.0",
     "tasks": [
         {
@@ -18,11 +12,10 @@
                 "-g",
                 "/Users/dpenney/Desktop/GNL/get_next_line.h",
                 "/Users/dpenney/Desktop/GNL/obrazec.c",
-              //  "-L/Users/dpenney/Desktop/GNL/libft/",
-              //  "-lft",
+                "-L/Users/dpenney/Desktop/GNL/libft/",
+                "-lft",
                 //"obrazec"
             ]
         }
     ]
->>>>>>> 6da7216fb79274ba6fe31efbf24a59bef551c2f0
 }
