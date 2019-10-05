@@ -8,7 +8,7 @@
             "name": "get_next_line",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/dpenney/dpenney/GNL/out",
+            "program": "/home/dpenney/dpenney/GNL/a.out",
             "args": [
 				"test.txt",
 			],//['222'],
