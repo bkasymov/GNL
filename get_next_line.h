@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # include <stdio.h> // УДАЛИТЬ!
-# define BUFF_SIZE 4096 //Я выделил столько памяти, чтобы здесь сохранить всё содержимое открываемого файла
+# define BUFF_SIZE 10 //Я выделил столько памяти, чтобы здесь сохранить всё содержимое открываемого файла
 # define FD_MAX 256 //  Узнал через команду макс. значение дескриптора launchctl limit maxfiles
 # define RET_VALUE(ret) ret > 0 ? 1 : ret
 
