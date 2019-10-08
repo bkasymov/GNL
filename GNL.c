@@ -1,76 +1,61 @@
 
 #include "get_next_line.h"
 
-static int						ft_remain(char *rem, char **line)
+static					ft_rec_line(int fd, char **str, char **line, int res)
 {
-	char						*ptr_nx;
+	char		*tmp_ptr;
+	int			i;
 
-	ptr_nx = NULL;
-	if (rem)
+	i = 0;
+	while (str[fd][i] != '\n' && str[fd][i] != '\0')
+		i++;
+	if (str[fd][i] == '\n')
 	{
-		if (ptr_nx = ft_strchr(rem, '\n'))
-		{
-			*ptr_nx = '\0'
-			*line = ft_strdup(rem);
-			ptr_nx++;
-			ft_strcpy(rem, ptr_nx);
-		}
-		else
-		{
-			*line = ft_strdup(rem);
-			ft_strclr(rem);
-		}
+		*line = ft_strsub(str[fd], 0, i);
+		tmp_ptr = ft_strdup(str[fd] + i);
+		free(str[fd]);
+		str[fd] = tmp_ptr;
+		if (str[fd][0] == '\0')
+			ft_strdel(str[fd]);
 	}
-	else
+	else if (str[fd][i] == '\0')
 	{
-		*line = ft_strnew(1);
+		if (res == BUFF_SIZE)
+			return (get_next_line(fd, line));
+		*line = ft_strdup(str[fd]);
+		ft_strdel(str[fd]);
 	}
-	return (ptr_nx);
-}
-
-int						ft_read(int fd, char **line)
-{
-
-	static char			rem;
-	char				buff[BUFF_SIZE];
-	int					endtx;
-
-	while (!ptr_nx && (endtx = read(fd, buff, BUFF_SIZE))) 
-	{
-		buff[endtx] = '\0';
-		if (ptr_nx = ft_strchr(buff, '\n'))
-		{
-			*ptr_nx = '\0';
-			ptr_nx++;
-			rem = ft_strdup(ptr_nx);
-		}
-		tmp = *line;
-		*line = ft_strjoin(*line, buff);
-		free(tmp);
-	}
-	return ;
+	return (1);
 }
 
 int						get_next_line(const int fd, char **line) 
 {
-	char				*ptr_nx;
+	static	char		str[FD_MAX];
+	int					res;
+	char				buff[BUFF_SIZE];
+	char				*tmp_ptr;
 
-	res = 1;
+	res = 0;
 	if (fd < 0 || fd > FD_MAX || !line) 
 		return (-1);
-	ptr_nx = ft_remain(rem, line)
-	ft_read(fd, line)
-	
-	return (0);
-}
+	while (res = read(fd, buff, BUFF_SIZE) > 0)
+	{
+		buff[res] = '\0';
+		if (str[fd]) == NULL)
+			str[fd] = ft_strnew(1);
+		tmp_ptr = ft_strjoin(str[fd], buff);
+		free(str[fd]);
+		str[fd] = tmp_ptr;
+		if (ft_strchr(buff, '\n'))
+			break;
+	}
+	if (res < 0)
+		return (-1);
+	else if (res == 0 && (str[fd] == NULL || str[fd][0] == '\0'))
+		return (0);
+	return (ft_rec_line(fd, str, line, res))
+	}
 
-int				main(int argc, char **argv)
-{
-	char	*line;
-	int		fd;
-
-	fd = open("test.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	printf("%s", line);
-	return (0);
+		
+	}
 }
