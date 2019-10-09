@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mikim <mikim@student.42.us.org>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/20 18:53:48 by mikim             #+#    #+#             */
-/*   Updated: 2019/09/24 23:02:46 by avenonat         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "get_next_line.h"
 
@@ -31,7 +20,7 @@ int		ft_new_line(char **s, char **line, int fd, int text)
 	}
 	else if (s[fd][len] == '\0') //если уже всё, то
 	{
-		if (ret == BUFF_SIZE) //ОТКУДА ЗДЕСЬ РЕТ????
+		if (text == BUFF_SIZE)
 			return (get_next_line(fd, line));
 		*line = ft_strdup(s[fd]);
 		ft_strdel(&s[fd]);

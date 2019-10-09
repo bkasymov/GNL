@@ -1,20 +1,16 @@
 #include "get_next_line.h"
+#include <stdio.h>
 
-int     main(int argc, char **argv)
+int     main(void)
 {
-    if (argc >= 2)
-    {
+
         int fd;
         char *line;
         fd = 0;
 
         fd = open("test.txt", O_RDONLY);
         get_next_line(fd, &line);
-        ft_putstr(line);
+        printf("%s", line);
         close(fd);
-
-
         return (0);
-    }
-    return (0);
 }

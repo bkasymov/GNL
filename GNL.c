@@ -53,9 +53,6 @@ int						get_next_line(const int fd, char **line)
 		return (-1);
 	else if (res == 0 && (str[fd] == NULL || str[fd][0] == '\0'))
 		return (0);
-	return (ft_rec_line(fd, str, line, res))
-	}
-
-		
-	}
+	ft_rec_line(fd, str, line, res)
+	return (1);
 }
