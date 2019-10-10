@@ -4,20 +4,21 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    
         {
-            "name": "get_next_line",
+            "name": "(lldb) Запустить",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/dpenney/dpenney/GNL/a.out",
-            "args": [
-				"test.txt",
-			],//['222'],
-            "stopAtEntry": false,
-            "cwd": "/home/dpenney/dpenney/GNL",
+            "program": "${workspaceFolder}/a.out",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "gcc build active file"
+            "MIMode": "lldb"
         }
+        
+        
+       
     ]
 }
