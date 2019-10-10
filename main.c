@@ -10,7 +10,7 @@ int     main(void)
 
         fd = open("test.txt", O_RDONLY);
         get_next_line(fd, &line);
-        printf("%s", line);
+        printf("%s\n", line);
         close(fd);
         return (0);
 }
