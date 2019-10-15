@@ -63,22 +63,20 @@ int		get_next_line(const int fd, char **line)
 	return (ft_new_line(s, line, fd, text)); //если что-то ещё есть, то 
 }
 
-int		main(int argc, char **argv)
+int		main(void)
 {
 	int		i;
 	int		fd;
 	char	*line;
 	
 	i = 0;
-	if (argc == 2)
-	{
-		fd = open(argv[1], O_RDONLY);
-		while (get_next_line(fd, &line) == 1)
+
+	fd = open("test.txt", O_RDONLY);
+	while (get_next_line(fd, &line) == 1)
 	{
 		ft_putstr(line);
 		ft_putchar('\n');
 	}
 	close(fd);
 	return (0);
-	}
 }

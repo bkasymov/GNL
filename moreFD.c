@@ -77,7 +77,6 @@ int			get_next_line(int fd, char **line)
 int		main(void)
 {
 	int		fd;
-	int		fd2;
 	char	*line;
 	
 	fd = open("text.txt", O_RDONLY);
@@ -87,14 +86,11 @@ int		main(void)
 	get_next_line(fd, &line);
 	ft_putstr(line);
 	ft_putchar('\n');
-	fd2 = open("text2.txt", O_RDONLY);
+	fd = open("text2.txt", O_RDONLY);
 	get_next_line(fd, &line);
 	ft_putstr(line);
 	ft_putchar('\n');
 	fd = open("text.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	ft_putstr(line);
-	ft_putchar('\n');
 	get_next_line(fd, &line);
 	ft_putstr(line);
 	ft_putchar('\n');
