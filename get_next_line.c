@@ -67,7 +67,7 @@ int			get_next_line(int fd, char **line)
 	char		*buff;
 	static char	*rem[FD_MAX];
 
-	if (fd < 0 || line == NULL || fd > FD_MAX || \
+	if (fd < 0 || !line || fd > FD_MAX || \
 								BUFF_SIZE <= 0 || BUFF_SIZE > BUFF_MAX)
 		return (-1);
 	if (!(buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
