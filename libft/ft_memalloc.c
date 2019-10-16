@@ -17,7 +17,7 @@ void		*ft_memalloc(size_t size)
 	char				*mem;
 	size_t				i;
 
-	if (size == SIZE_MAX)
+	if (size > SIZE_MAX)
 		return (NULL);
 	i = 0;
 	mem = malloc(size);
