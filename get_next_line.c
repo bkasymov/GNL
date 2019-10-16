@@ -37,17 +37,14 @@ static int	rec_line(int fd, char **line, char **rem)
 	return (1);
 }
 
-static int	give_line(int fd, char **line, char **rem, int rsr)
+static int	give_line(int fd, char **line, char **rem, char *buff)
 {
-	char	*t_ptr;
-	char	*buff;
+	char		*t_ptr;
+	int			rsr;
 
-	if (!(buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
-		return (-1);
+	rsr = 0;
 	while ((rsr = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		if (rsr < 0)
-			return (-1);
 		buff[rsr] = '\0';
 		if (rem[fd] == NULL)
 			rem[fd] = ft_strnew(1);
@@ -58,74 +55,22 @@ static int	give_line(int fd, char **line, char **rem, int rsr)
 			break ;
 	}
 	free(buff);
-	if (rsr == 0 && (rem[fd][0] == '\0' || rem[fd] == NULL))
+	if (rsr < 0)
+		return (-1);
+	if (rsr == 0 && (rem[fd] == NULL || rem[fd][0] == '\0'))
 		return (0);
 	return (rec_line(fd, line, rem));
 }
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*rem[OPEN_MAX];
-	int			rsr;
+	char		*buff;
+	static char	*rem[FD_MAX];
 
-	rsr = 0;
-	if (fd < 0 || line == NULL || fd > OPEN_MAX || \
-								BUFF_SIZE <= 0)
+	if (fd < 0 || line == NULL || fd > FD_MAX || \
+								BUFF_SIZE <= 0 || BUFF_SIZE > BUFF_MAX)
 		return (-1);
-	return (give_line(fd, line, rem, rsr));
-}
-
-
-
-
-
-
-
-
-
-
-#include <string.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-
-/*
-**  1 line with 8 chars with Line Feed
-*/
-
-int				main(void)
-{
-	char		*line;
-	int			fd;
-	int			ret;
-	int			count_lines;
-	char		*filename;
-	int			errors;
-
-	filename = "gnl1_1.txt";
-	fd = open(filename, O_RDONLY);
-	if (fd > 2)
-	{
-		count_lines = 0;
-		errors = 0;
-		line = NULL;
-		while ((ret = get_next_line(fd, &line)) > 0)
-		{
-			if (count_lines == 0 && strcmp(line, "1234567") != 0)
-				errors++;
-			count_lines++;
-			if (count_lines > 50)
-				break;
-		}
-		close(fd);
-		if (count_lines != 1)
-			printf("-> must have returned '1' once instead of %d time(s)\n", count_lines);
-		if (errors > 0)
-			printf("-> must have read \"1234567\" instead of \"%s\"\n", line);
-		if (count_lines == 1 && errors == 0)
-			printf("OK\n");
-	}
-	else
-		printf("An error occured while opening file %s\n", filename);
-	return (0);
+	if (!(buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
+		return (-1);
+	return (give_line(fd, line, rem, buff));
 }
